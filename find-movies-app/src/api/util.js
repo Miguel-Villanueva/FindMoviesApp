@@ -10,15 +10,13 @@ export const getPopularMovieIDs = (data) =>
 
 export const transformMetaData = (data) => {
   return Object.keys(data).map((movie) => {
-    const movieMetaData = {
+    return {
       title: data[movie].title.title,
-      image: { BrokenImageIcon },
+      image: data[movie].title.hasOwnProperty("image")
+        ? data[movie].title.image.url
+        : { BrokenImageIcon },
       year: data[movie].title.year,
       rating: data[movie].ratings.rating,
     };
-    if (data[movie].title.hasOwnProperty("image")) {
-      movieMetaData.image = data[movie].title.image.url;
-    }
-    return movieMetaData;
   });
 };

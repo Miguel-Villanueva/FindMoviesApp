@@ -11,7 +11,7 @@ import {
 import { YouMightLike } from "./Components/YouMightLike";
 
 const queryClient = new QueryClient();
-function App() {
+export const App = () => {
   return (
     <div className="App">
       <QueryClientProvider client={queryClient}>
@@ -20,6 +20,4 @@ function App() {
       </QueryClientProvider>
     </div>
   );
-}
-
-export default App;
+};
