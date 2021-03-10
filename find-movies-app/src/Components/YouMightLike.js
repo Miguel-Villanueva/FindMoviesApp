@@ -28,8 +28,8 @@ export const YouMightLike = () => {
 
   const popularIDs = getPopularMovieIDs(data);
   return (
-    <Box mr={10} ml={10} mt={15}>
-      <Typography variant="h2">You Might Like</Typography>
+    <Box mr={"7%"} ml={"7%"} mt={15}>
+      <Typography variant="h6">YOU MIGHT LIKE</Typography>
       <PosterDisplay movieIDs={popularIDs} />
     </Box>
   );

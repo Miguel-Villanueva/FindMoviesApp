@@ -10,6 +10,7 @@ export const findPopularMovies = async () => {
     }
   ).then((res) => res.json());
 };
+
 export const mockFindPopularMovies = async () => {
   return await fetch(`http://localhost:8000/popularMovies`, {
     method: "GET",
@@ -26,4 +27,30 @@ export const metaDataByMovie = async (ids) => {
       "x-rapidapi-host": "imdb8.p.rapidapi.com",
     },
   }).then((res) => res.json());
+};
+
+export const overviewByMovie = async (id) => {
+  return await fetch(
+    `https://imdb8.p.rapidapi.com/title/get-overview-details?tconst=${id}`,
+    {
+      method: "GET",
+      headers: {
+        "x-rapidapi-key": process.env.REACT_APP_APIKEY,
+        "x-rapidapi-host": "imdb8.p.rapidapi.com",
+      },
+    }
+  ).then((res) => res.json());
+};
+
+export const findQueryMovies = async (query) => {
+  return await fetch(
+    `https://imdb8.p.rapidapi.com/title/find?q=${query.replace(" ", "%")}`,
+    {
+      method: "GET",
+      headers: {
+        "x-rapidapi-key": process.env.REACT_APP_APIKEY,
+        "x-rapidapi-host": "imdb8.p.rapidapi.com",
+      },
+    }
+  ).then((res) => res.json());
 };

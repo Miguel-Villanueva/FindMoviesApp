@@ -1,68 +1,82 @@
-import React from "react";
-import {
-  fade,
-  makeStyles,
-  Theme,
-  createStyles,
-} from "@material-ui/core/styles";
+import React, { useState } from "react";
+import { fade, makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-
+import { DebounceInput } from "react-debounce-input";
 import Typography from "@material-ui/core/Typography";
-import InputBase from "@material-ui/core/InputBase";
+import { YouMightLike } from "./YouMightLike";
+import { SearchResults } from "./SearchResults";
+import { MovieDetails } from "./MovieDetails";
 
 const useStyles = makeStyles((theme) => ({
   grow: {
     flexGrow: 1,
   },
-  menuButton: {
-    marginRight: theme.spacing(2),
+  header: {
+    minHeight: "209px",
+    display: "flex",
+    marginLeft: "7%",
+    marginRight: "7%",
+    padding: "0px",
+    flexDirection: "column",
+    alignItems: "flex-start",
+    justifyContent: "center",
   },
   title: {
-    display: "none",
+    display: "flex",
+    justifyContent: "flex-start",
     [theme.breakpoints.up("sm")]: {
       display: "block",
     },
   },
+
   search: {
-    position: "relative",
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: fade(theme.palette.common.white, 0.15),
+    backgroundColor: fade(theme.palette.secondary.main, 0.75),
     "&:hover": {
-      backgroundColor: fade(theme.palette.common.white, 0.25),
+      backgroundColor: fade(theme.palette.common.white, 0.9),
     },
-    marginRight: theme.spacing(2),
-    marginLeft: 0,
+    borderRadius: "5px",
+    display: "flex",
+    textAlign: "left",
     width: "100%",
+    marginTop: "2%",
     [theme.breakpoints.up("sm")]: {
-      marginLeft: theme.spacing(3),
-      width: "auto",
+      minHeight: "56px",
+      marginTop: "2%",
+      borderRadius: "10px",
     },
+    fontSize: "2rem",
   },
 }));
 
 export const AppBarSearch = () => {
   const classes = useStyles();
+  const [query, setQuery] = useState("");
+
+  const handleChange = (event) => {
+    console.log(event.target.value);
+    setQuery(event.target.value);
+  };
 
   return (
     <div className={classes.grow}>
-      <AppBar position="static">
-        <Toolbar>
-          <Typography className={classes.title} varient="h6" noWrap>
+      <AppBar color="primary" position="static">
+        <Toolbar className={classes.header}>
+          <Typography className={classes.title} variant="h4" noWrap>
             Find Movies
           </Typography>
-          <div className={classes.search}>
-            <InputBase
-              placeholder="Eg: Harry Potter"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ "aria-label": "search" }}
-            />
-          </div>
+
+          <DebounceInput
+            placeholder="E.g. Harry Potter"
+            minLength={2}
+            debounceTimeout={300}
+            className={classes.search}
+            onChange={handleChange}
+          />
         </Toolbar>
       </AppBar>
+
+      {query !== "" ? <SearchResults search={query} /> : <YouMightLike />}
     </div>
   );
 };
